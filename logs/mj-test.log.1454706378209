@@ -1,0 +1,138 @@
+INFO  22:05:37,208 - Compiling source file: C:\pp1projekat\MJ Compiler\test\program.mj
+INFO  22:05:37,223 - #19 program
+INFO  22:05:37,223 - #41 Geometrija
+INFO  22:05:37,223 - #32 const
+INFO  22:05:37,224 - #41 int
+INFO  22:05:37,224 - #41 PI
+INFO  22:05:37,224 - #10 =
+INFO  22:05:37,224 - #40 3
+INFO  22:05:37,224 - #11 ;
+INFO  22:05:37,224 - #41 int
+INFO  22:05:37,225 - #41 rezultati
+INFO  22:05:37,225 - #6 [
+INFO  22:05:37,225 - #7 ]
+INFO  22:05:37,225 - #11 ;
+INFO  22:05:37,225 - #41 int
+INFO  22:05:37,225 - #41 c
+INFO  22:05:37,225 - #11 ;
+INFO  22:05:37,225 - #29 class
+INFO  22:05:37,225 - #41 kvadrat
+INFO  22:05:37,225 - #2 {
+INFO  22:05:37,226 - #41 string
+INFO  22:05:37,226 - #41 ime
+INFO  22:05:37,226 - #11 ;
+INFO  22:05:37,226 - #41 int
+INFO  22:05:37,226 - #41 a
+INFO  22:05:37,226 - #11 ;
+INFO  22:05:37,226 - #41 int
+INFO  22:05:37,227 - #41 b
+INFO  22:05:37,227 - #11 ;
+INFO  22:05:37,227 - #2 {
+INFO  22:05:37,227 - #31 void
+INFO  22:05:37,227 - #41 setA
+INFO  22:05:37,227 - #4 (
+INFO  22:05:37,227 - #5 )
+INFO  22:05:37,227 - #2 {
+INFO  22:05:37,227 - #20 read
+INFO  22:05:37,227 - #4 (
+INFO  22:05:37,227 - #41 a
+INFO  22:05:37,227 - #5 )
+INFO  22:05:37,227 - #11 ;
+INFO  22:05:37,228 - #3 }
+INFO  22:05:37,229 - #31 void
+INFO  22:05:37,229 - #41 setB
+INFO  22:05:37,229 - #4 (
+INFO  22:05:37,229 - #5 )
+INFO  22:05:37,229 - #2 {
+INFO  22:05:37,229 - #20 read
+INFO  22:05:37,230 - #4 (
+INFO  22:05:37,230 - #41 b
+INFO  22:05:37,230 - #5 )
+INFO  22:05:37,230 - #11 ;
+INFO  22:05:37,230 - #3 }
+INFO  22:05:37,230 - #31 void
+INFO  22:05:37,230 - #41 setIme
+INFO  22:05:37,230 - #4 (
+INFO  22:05:37,230 - #5 )
+INFO  22:05:37,230 - #2 {
+INFO  22:05:37,230 - #20 read
+INFO  22:05:37,230 - #4 (
+INFO  22:05:37,230 - #41 ime
+INFO  22:05:37,230 - #5 )
+INFO  22:05:37,231 - #11 ;
+INFO  22:05:37,231 - #3 }
+INFO  22:05:37,231 - #3 }
+INFO  22:05:37,231 - #3 }
+INFO  22:05:37,231 - #41 kvadrat
+INFO  22:05:37,231 - #41 kvad
+INFO  22:05:37,231 - #11 ;
+INFO  22:05:37,231 - #2 {
+INFO  22:05:37,232 - #41 int
+INFO  22:05:37,232 - #41 racunaj
+INFO  22:05:37,232 - #4 (
+INFO  22:05:37,232 - #5 )
+INFO  22:05:37,232 - #41 int
+INFO  22:05:37,232 - #41 lokb
+INFO  22:05:37,232 - #11 ;
+INFO  22:05:37,232 - #2 {
+INFO  22:05:37,232 - #21 return
+INFO  22:05:37,232 - #41 lokb
+INFO  22:05:37,232 - #11 ;
+INFO  22:05:37,233 - #3 }
+INFO  22:05:37,233 - #41 int
+INFO  22:05:37,233 - #41 main
+INFO  22:05:37,233 - #4 (
+INFO  22:05:37,233 - #5 )
+INFO  22:05:37,233 - #41 int
+INFO  22:05:37,233 - #41 loka
+INFO  22:05:37,233 - #11 ;
+INFO  22:05:37,233 - #2 {
+INFO  22:05:37,234 - #41 loka
+INFO  22:05:37,234 - #10 =
+INFO  22:05:37,234 - #40 5
+INFO  22:05:37,234 - #11 ;
+INFO  22:05:37,234 - #41 rezultati
+INFO  22:05:37,234 - #6 [
+INFO  22:05:37,234 - #40 1
+INFO  22:05:37,234 - #7 ]
+INFO  22:05:37,234 - #10 =
+INFO  22:05:37,234 - #40 1
+INFO  22:05:37,234 - #11 ;
+INFO  22:05:37,234 - #41 kvad
+INFO  22:05:37,235 - #13 .
+INFO  22:05:37,235 - #41 setA
+INFO  22:05:37,235 - #4 (
+INFO  22:05:37,235 - #5 )
+INFO  22:05:37,235 - #11 ;
+INFO  22:05:37,235 - #41 kvad
+INFO  22:05:37,235 - #13 .
+INFO  22:05:37,235 - #41 setB
+INFO  22:05:37,235 - #4 (
+INFO  22:05:37,235 - #5 )
+INFO  22:05:37,235 - #11 ;
+INFO  22:05:37,235 - #2 {
+INFO  22:05:37,235 - #41 rezultati
+INFO  22:05:37,236 - #6 [
+INFO  22:05:37,236 - #40 1
+INFO  22:05:37,236 - #7 ]
+INFO  22:05:37,236 - #10 =
+INFO  22:05:37,236 - #40 1
+INFO  22:05:37,236 - #11 ;
+INFO  22:05:37,236 - #3 }
+INFO  22:05:37,236 - #21 return
+INFO  22:05:37,236 - #41 loka
+INFO  22:05:37,236 - #11 ;
+INFO  22:05:37,236 - #3 }
+INFO  22:05:37,236 - #3 }
+INFO  22:05:37,237 - =====================BROJACI=========================
+INFO  22:05:37,237 - Broj Globalnih promenjljivi:2
+INFO  22:05:37,237 - Broj Lokalnih promenjljivi:1
+INFO  22:05:37,237 - Broj Globalnih konstanti:1
+INFO  22:05:37,237 - Broj Globalnih nizova:1
+INFO  22:05:37,238 - Broj Deklaracija funkcija:2
+INFO  22:05:37,238 - Broj Blokova naredbi:1
+INFO  22:05:37,238 - Broj Poziva funkcija u main metodi:2
+INFO  22:05:37,238 - Broj Deklaracija formalnih argumenata:0
+INFO  22:05:37,238 - Broj Definicija unutrasnjih klasa:1
+INFO  22:05:37,238 - Broj Definicija klasnih metoda:3
+INFO  22:05:37,238 - Broj Definicija klasnih polja:3

@@ -1,0 +1,24 @@
+INFO  18:16:30,214 - Compiling source file: C:\pp1projekat\MJ Compiler\test\program.mj
+INFO  18:16:30,230 - Semantika: Globalna promenjliva a definisana na liniji  6 Var a: int, 0, 0 
+INFO  18:16:30,230 - Semantika: Globalna promenjliva b definisana na liniji  6 Var b: int, 1, 0 
+INFO  18:16:30,230 - Semantika: Globalna promenjliva f definisana na liniji  7 Var f: char, 2, 0 
+INFO  18:16:30,231 - Semantika: Globalna promenjliva manji definisana na liniji  8 Var manji: int, 3, 0 
+INFO  18:16:30,231 - Semantika: Globalna promenjliva veci definisana na liniji  8 Var veci: int, 4, 0 
+INFO  18:16:30,231 - Semantika: Globalna promenjliva step definisana na liniji  8 Var step: int, 5, 0 
+INFO  18:16:30,231 - Semantika: Globalna promenjliva pom definisana na liniji  8 Var pom: int, 6, 0 
+INFO  18:16:30,232 - Semantika: Globalna promenjliva novi definisana na liniji  8 Var novi: int, 7, 0 
+INFO  18:16:30,232 - Semantika: Konstanta x definisana na: 9 -- Con x: int, 10, 0 
+INFO  18:16:30,232 - Semantika: Obradjuje se funkcija main na liniji 12
+ERROR 18:16:30,233 - Semanticka greska na linji: 19 Tip leve strane se ne moze dodeliti desnoj strani manji
+INFO  18:16:30,235 - =====================BROJACI=========================
+INFO  18:16:30,235 - Broj Globalnih promenjljivi:8
+INFO  18:16:30,235 - Broj Lokalnih promenjljivi:0
+INFO  18:16:30,235 - Broj Globalnih konstanti:1
+INFO  18:16:30,235 - Broj Globalnih nizova:0
+INFO  18:16:30,235 - Broj Deklaracija funkcija:1
+INFO  18:16:30,235 - Broj Blokova naredbi:3
+INFO  18:16:30,235 - Broj Poziva funkcija u main metodi:0
+INFO  18:16:30,235 - Broj Deklaracija formalnih argumenata:0
+INFO  18:16:30,235 - Broj Definicija unutrasnjih klasa:0
+INFO  18:16:30,235 - Broj Definicija klasnih metoda:0
+INFO  18:16:30,235 - Broj Definicija klasnih polja:0

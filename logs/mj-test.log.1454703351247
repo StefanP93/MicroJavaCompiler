@@ -1,0 +1,123 @@
+INFO  21:15:32,874 - Compiling source file: C:\pp1projekat\MJ Compiler\test\program.mj
+INFO  21:15:32,968 - #19 program
+INFO  21:15:32,968 - #41 Geometrija
+INFO  21:15:32,968 - #32 const
+INFO  21:15:32,968 - #41 int
+INFO  21:15:32,968 - #41 PI
+INFO  21:15:32,968 - #10 =
+INFO  21:15:32,968 - #40 3
+INFO  21:15:32,968 - #11 ;
+INFO  21:15:32,968 - #41 int
+INFO  21:15:32,973 - #41 rezultati
+INFO  21:15:32,973 - #6 [
+INFO  21:15:32,973 - #7 ]
+INFO  21:15:32,973 - #11 ;
+INFO  21:15:32,973 - #41 int
+INFO  21:15:32,973 - #41 c
+INFO  21:15:32,973 - #11 ;
+INFO  21:15:32,973 - #29 class
+INFO  21:15:32,973 - #41 kvadrat
+INFO  21:15:32,973 - #2 {
+INFO  21:15:32,973 - #41 string
+INFO  21:15:32,973 - #41 ime
+INFO  21:15:32,973 - #11 ;
+INFO  21:15:32,973 - #41 int
+INFO  21:15:32,973 - #41 a
+INFO  21:15:32,973 - #11 ;
+INFO  21:15:32,973 - #41 int
+INFO  21:15:32,973 - #41 b
+INFO  21:15:32,973 - #11 ;
+INFO  21:15:32,973 - #2 {
+INFO  21:15:32,973 - #31 void
+INFO  21:15:32,973 - #41 setA
+INFO  21:15:32,973 - #4 (
+INFO  21:15:32,973 - #5 )
+INFO  21:15:32,973 - #2 {
+INFO  21:15:32,978 - #20 read
+INFO  21:15:32,978 - #4 (
+INFO  21:15:32,978 - #41 a
+INFO  21:15:32,978 - #5 )
+INFO  21:15:32,978 - #11 ;
+INFO  21:15:32,978 - #3 }
+INFO  21:15:32,978 - #31 void
+INFO  21:15:32,978 - #41 setB
+INFO  21:15:32,978 - #4 (
+INFO  21:15:32,978 - #5 )
+INFO  21:15:32,978 - #2 {
+INFO  21:15:32,978 - #20 read
+INFO  21:15:32,978 - #4 (
+INFO  21:15:32,978 - #41 b
+INFO  21:15:32,978 - #5 )
+INFO  21:15:32,978 - #11 ;
+INFO  21:15:32,978 - #3 }
+INFO  21:15:32,978 - #31 void
+INFO  21:15:32,978 - #41 setIme
+INFO  21:15:32,978 - #4 (
+INFO  21:15:32,978 - #5 )
+INFO  21:15:32,978 - #2 {
+INFO  21:15:32,978 - #20 read
+INFO  21:15:32,978 - #4 (
+INFO  21:15:32,978 - #41 ime
+INFO  21:15:32,978 - #5 )
+INFO  21:15:32,978 - #11 ;
+INFO  21:15:32,978 - #3 }
+INFO  21:15:32,978 - #3 }
+INFO  21:15:32,978 - #3 }
+INFO  21:15:32,978 - #41 kvadrat
+INFO  21:15:32,983 - #41 kvad
+INFO  21:15:32,983 - #11 ;
+INFO  21:15:32,983 - #2 {
+INFO  21:15:32,983 - #41 int
+INFO  21:15:32,983 - #41 main
+INFO  21:15:32,983 - #4 (
+INFO  21:15:32,983 - #5 )
+INFO  21:15:32,983 - #41 int
+INFO  21:15:32,983 - #41 loka
+INFO  21:15:32,983 - #11 ;
+INFO  21:15:32,983 - #2 {
+INFO  21:15:32,983 - #41 loka
+INFO  21:15:32,983 - #10 =
+INFO  21:15:32,983 - #40 5
+INFO  21:15:32,983 - #11 ;
+INFO  21:15:32,983 - #41 rezultati
+INFO  21:15:32,983 - #6 [
+INFO  21:15:32,983 - #40 1
+INFO  21:15:32,983 - #7 ]
+INFO  21:15:32,983 - #10 =
+INFO  21:15:32,983 - #40 1
+INFO  21:15:32,983 - #11 ;
+INFO  21:15:32,983 - #41 kvad
+INFO  21:15:32,983 - #13 .
+INFO  21:15:32,983 - #41 setA
+INFO  21:15:32,983 - #4 (
+INFO  21:15:32,983 - #5 )
+INFO  21:15:32,983 - #11 ;
+INFO  21:15:32,983 - #41 kvad
+INFO  21:15:32,983 - #13 .
+INFO  21:15:32,983 - #41 setB
+INFO  21:15:32,983 - #4 (
+INFO  21:15:32,983 - #5 )
+INFO  21:15:32,983 - #11 ;
+INFO  21:15:32,983 - #2 {
+INFO  21:15:32,983 - #41 rezultati
+INFO  21:15:32,983 - #6 [
+INFO  21:15:32,988 - #40 1
+INFO  21:15:32,988 - #7 ]
+INFO  21:15:32,988 - #10 =
+INFO  21:15:32,988 - #40 1
+INFO  21:15:32,988 - #11 ;
+INFO  21:15:32,988 - #3 }
+INFO  21:15:32,988 - #41 retunr
+INFO  21:15:32,988 - #41 loka
+INFO  21:15:32,988 - =====================BROJACI=========================
+INFO  21:15:32,988 - Broj Globalnih promenjljivi:2
+INFO  21:15:32,993 - Broj Lokalnih promenjljivi:1
+INFO  21:15:32,993 - Broj Globalnih konstanti:1
+INFO  21:15:32,993 - Broj Globalnih nizova:1
+INFO  21:15:32,993 - Broj Deklaracija funkcija:1
+INFO  21:15:32,993 - Broj Blokova naredbi:1
+INFO  21:15:32,993 - Broj Poziva funkcija u main metodi:2
+INFO  21:15:32,993 - Broj Deklaracija formalnih argumenata:0
+INFO  21:15:32,993 - Broj Definicija unutrasnjih klasa:1
+INFO  21:15:32,993 - Broj Definicija klasnih metoda:3
+INFO  21:15:32,993 - Broj Definicija klasnih polja:3

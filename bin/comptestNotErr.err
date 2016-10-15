@@ -1,0 +1,18 @@
+
+Sintaksna greska na liniji 8
+Sintaksna greska Greska pri definiciji globalne promenljive na liniji: 8
+Semanticka greska na liniji 9 Globalna promenjljiva c vec deklarisana!
+
+Sintaksna greska na liniji 12
+Sintaksna greska Greska pri definiciji lokalne promenljive na liniji: 12
+Semanticka greska na liniji: 16 Oba operanda moraju biti tipa int pri operacijama mnozenja i deljenja
+Semanticka greska na linji: 16 Tip desne vrednosti ne sme biti void
+
+Sintaksna greska na liniji 17
+Sintaksna greska Greska u IF uslovu na liniji: 17
+Semanticka greska na liniji: 19 Oba operanda moraju biti tipa int pri operacijama mnozenja i deljenja
+Semanticka greska na linji: 19 Tip desne vrednosti ne sme biti void
+Semanticka greska na liniji: 21 Identifikator x se koristi a nije deklarisan
+Semanticka greska na liniji: 22 Identifikator x se koristi a nije deklarisan
+Semanticka greska na liniji: 23 Identifikator max se koristi a nije deklarisan
+Parsiranje neuspesno

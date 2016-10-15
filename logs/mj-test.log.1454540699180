@@ -1,0 +1,27 @@
+INFO  00:04:34,535 - Compiling source file: C:\pp1projekat\MJ Compiler\test\program.mj
+INFO  00:04:34,550 - #19 program
+INFO  00:04:34,550 - #41 MaxCifra
+INFO  00:04:34,550 - #32 const
+INFO  00:04:34,550 - #41 int
+INFO  00:04:34,550 - #41 x
+INFO  00:04:34,550 - #10 =
+INFO  00:04:34,550 - #40 5
+INFO  00:04:34,550 - #11 ;
+INFO  00:04:34,550 - #41 int
+INFO  00:04:34,550 - #41 a
+INFO  00:04:34,550 - #12 ,
+INFO  00:04:34,550 - #41 c
+INFO  00:04:34,550 - #12 ,
+INFO  00:04:34,550 - #41 maxcif
+INFO  00:04:34,550 - #11 ;
+INFO  00:04:34,550 - #41 int
+INFO  00:04:34,550 - #41 cE
+INFO  00:04:34,550 - #11 ;
+INFO  00:04:34,550 - #2 {
+INFO  00:04:34,550 - #31 void
+INFO  00:04:34,550 - #41 main
+INFO  00:04:34,555 - #4 (
+INFO  00:04:34,555 - #5 )
+INFO  00:04:34,555 - #41 char
+INFO  00:04:34,555 - #41 a
+INFO  00:04:34,555 - #11 ;

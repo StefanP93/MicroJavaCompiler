@@ -1,0 +1,80 @@
+INFO  17:05:22,041 - Compiling source file: C:\pp1projekat\MJ Compiler\test\program.mj
+INFO  17:05:22,056 - #19 program
+INFO  17:05:22,056 - #41 test03
+INFO  17:05:22,057 - #32 const
+INFO  17:05:22,057 - #41 int
+INFO  17:05:22,057 - #41 a
+INFO  17:05:22,057 - #10 =
+INFO  17:05:22,057 - #40 3
+INFO  17:05:22,057 - #11 ;
+INFO  17:05:22,057 - #41 int
+INFO  17:05:22,058 - #41 x
+INFO  17:05:22,058 - #12 ,
+INFO  17:05:22,058 - #41 y
+INFO  17:05:22,058 - #11 ;
+INFO  17:05:22,058 - #41 char
+INFO  17:05:22,058 - #41 z
+INFO  17:05:22,059 - #11 ;
+INFO  17:05:22,059 - #2 {
+INFO  17:05:22,059 - #31 void
+INFO  17:05:22,059 - #41 main
+INFO  17:05:22,059 - #4 (
+INFO  17:05:22,059 - #5 )
+INFO  17:05:22,059 - #2 {
+INFO  17:05:22,059 - #20 read
+INFO  17:05:22,061 - #4 (
+INFO  17:05:22,061 - #41 a
+INFO  17:05:22,061 - #5 )
+INFO  17:05:22,061 - #11 ;
+INFO  17:05:22,061 - #41 a
+INFO  17:05:22,061 - #10 =
+INFO  17:05:22,061 - #40 5
+INFO  17:05:22,062 - #11 ;
+INFO  17:05:22,062 - #41 x
+INFO  17:05:22,062 - #10 =
+INFO  17:05:22,062 - #40 1
+INFO  17:05:22,062 - #11 ;
+INFO  17:05:22,062 - #41 y
+INFO  17:05:22,062 - #10 =
+INFO  17:05:22,062 - #40 3
+INFO  17:05:22,062 - #11 ;
+INFO  17:05:22,063 - #41 z
+INFO  17:05:22,063 - #10 =
+INFO  17:05:22,063 - #42 b
+INFO  17:05:22,063 - #11 ;
+INFO  17:05:22,063 - #37 while
+INFO  17:05:22,063 - #4 (
+INFO  17:05:22,063 - #41 z
+INFO  17:05:22,063 - #23 <
+INFO  17:05:22,063 - #41 a
+INFO  17:05:22,063 - #5 )
+INFO  17:05:22,063 - #2 {
+INFO  17:05:22,064 - #41 z
+INFO  17:05:22,064 - #10 =
+INFO  17:05:22,064 - #41 y
+INFO  17:05:22,064 - #8 +
+INFO  17:05:22,064 - #41 x
+INFO  17:05:22,064 - #11 ;
+INFO  17:05:22,064 - #41 x
+INFO  17:05:22,064 - #10 =
+INFO  17:05:22,064 - #41 x
+INFO  17:05:22,064 - #8 +
+INFO  17:05:22,064 - #40 1
+INFO  17:05:22,064 - #11 ;
+INFO  17:05:22,065 - #3 }
+INFO  17:05:22,065 - #36 break
+INFO  17:05:22,065 - #11 ;
+INFO  17:05:22,065 - #3 }
+INFO  17:05:22,065 - #3 }
+INFO  17:05:22,065 - =====================BROJACI=========================
+INFO  17:05:22,065 - Broj Globalnih promenjljivi:3
+INFO  17:05:22,065 - Broj Lokalnih promenjljivi:0
+INFO  17:05:22,065 - Broj Globalnih konstanti:1
+INFO  17:05:22,065 - Broj Globalnih nizova:0
+INFO  17:05:22,066 - Broj Deklaracija funkcija:1
+INFO  17:05:22,066 - Broj Blokova naredbi:1
+INFO  17:05:22,066 - Broj Poziva funkcija u main metodi:0
+INFO  17:05:22,066 - Broj Deklaracija formalnih argumenata:0
+INFO  17:05:22,066 - Broj Definicija unutrasnjih klasa:0
+INFO  17:05:22,066 - Broj Definicija klasnih metoda:0
+INFO  17:05:22,066 - Broj Definicija klasnih polja:0

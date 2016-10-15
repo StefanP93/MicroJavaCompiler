@@ -1,0 +1,81 @@
+INFO  22:47:18,641 - Compiling source file: C:\pp1projekat\MJ Compiler\test\program.mj
+INFO  22:47:18,656 - #19 program
+INFO  22:47:18,656 - #41 Geometrija
+INFO  22:47:18,656 - #32 const
+INFO  22:47:18,656 - #41 int
+INFO  22:47:18,656 - #41 PI
+INFO  22:47:18,656 - #10 =
+INFO  22:47:18,656 - #40 3
+INFO  22:47:18,656 - #11 ;
+INFO  22:47:18,657 - #41 int
+INFO  22:47:18,657 - #41 rezultati
+INFO  22:47:18,657 - #6 [
+INFO  22:47:18,657 - #7 ]
+INFO  22:47:18,657 - #11 ;
+INFO  22:47:18,658 - #41 int
+INFO  22:47:18,658 - #41 c
+INFO  22:47:18,658 - #11 ;
+INFO  22:47:18,658 - #2 {
+INFO  22:47:18,658 - #41 int
+INFO  22:47:18,658 - #41 racunaj
+INFO  22:47:18,658 - #4 (
+INFO  22:47:18,658 - #5 )
+INFO  22:47:18,658 - #41 int
+INFO  22:47:18,659 - #41 lokb
+INFO  22:47:18,659 - #11 ;
+INFO  22:47:18,659 - #2 {
+INFO  22:47:18,659 - #21 return
+INFO  22:47:18,660 - #41 lokb
+INFO  22:47:18,661 - #11 ;
+INFO  22:47:18,661 - #3 }
+INFO  22:47:18,661 - #41 int
+INFO  22:47:18,661 - #41 main
+INFO  22:47:18,661 - #4 (
+INFO  22:47:18,661 - #5 )
+INFO  22:47:18,661 - #41 int
+INFO  22:47:18,661 - #41 loka
+INFO  22:47:18,661 - #11 ;
+INFO  22:47:18,661 - #2 {
+INFO  22:47:18,662 - #41 loka
+INFO  22:47:18,662 - #10 =
+INFO  22:47:18,662 - #40 5
+INFO  22:47:18,662 - #11 ;
+INFO  22:47:18,662 - #41 rezultati
+INFO  22:47:18,662 - #6 [
+INFO  22:47:18,662 - #40 1
+INFO  22:47:18,662 - #7 ]
+INFO  22:47:18,662 - #10 =
+INFO  22:47:18,662 - #40 1
+INFO  22:47:18,662 - #11 ;
+INFO  22:47:18,662 - #2 {
+INFO  22:47:18,663 - #41 rezultati
+INFO  22:47:18,663 - #6 [
+INFO  22:47:18,663 - #40 1
+INFO  22:47:18,663 - #7 ]
+INFO  22:47:18,663 - #10 =
+INFO  22:47:18,663 - #40 1
+INFO  22:47:18,663 - #11 ;
+INFO  22:47:18,663 - #3 }
+INFO  22:47:18,663 - #41 loka
+INFO  22:47:18,663 - #10 =
+INFO  22:47:18,663 - #41 racunaj
+INFO  22:47:18,663 - #4 (
+INFO  22:47:18,663 - #5 )
+INFO  22:47:18,664 - #11 ;
+INFO  22:47:18,664 - #21 return
+INFO  22:47:18,664 - #41 loka
+INFO  22:47:18,664 - #11 ;
+INFO  22:47:18,664 - #3 }
+INFO  22:47:18,664 - #3 }
+INFO  22:47:18,664 - =====================BROJACI=========================
+INFO  22:47:18,664 - Broj Globalnih promenjljivi:1
+INFO  22:47:18,665 - Broj Lokalnih promenjljivi:1
+INFO  22:47:18,665 - Broj Globalnih konstanti:1
+INFO  22:47:18,665 - Broj Globalnih nizova:1
+INFO  22:47:18,665 - Broj Deklaracija funkcija:2
+INFO  22:47:18,665 - Broj Blokova naredbi:1
+INFO  22:47:18,665 - Broj Poziva funkcija u main metodi:1
+INFO  22:47:18,665 - Broj Deklaracija formalnih argumenata:0
+INFO  22:47:18,665 - Broj Definicija unutrasnjih klasa:0
+INFO  22:47:18,665 - Broj Definicija klasnih metoda:0
+INFO  22:47:18,665 - Broj Definicija klasnih polja:0

@@ -1,0 +1,18 @@
+INFO  17:06:54,337 - Compiling source file: C:\pp1projekat\MJ Compiler\test\program.mj
+INFO  17:06:54,353 - #19 program
+INFO  17:06:54,353 - #41 MaxCifra
+INFO  17:06:54,353 - #32 const
+INFO  17:06:54,353 - #41 x
+INFO  17:06:54,353 - #11 ;
+INFO  17:06:54,354 - =====================BROJACI=========================
+INFO  17:06:54,354 - Broj Globalnih promenjljivi:0
+INFO  17:06:54,354 - Broj Lokalnih promenjljivi:0
+INFO  17:06:54,354 - Broj Globalnih konstanti:0
+INFO  17:06:54,354 - Broj Globalnih nizova:0
+INFO  17:06:54,354 - Broj Deklaracija funkcija:0
+INFO  17:06:54,354 - Broj Blokova naredbi:0
+INFO  17:06:54,354 - Broj Poziva funkcija u main metodi:0
+INFO  17:06:54,354 - Broj Deklaracija formalnih argumenata:0
+INFO  17:06:54,355 - Broj Definicija unutrasnjih klasa:0
+INFO  17:06:54,355 - Broj Definicija klasnih metoda:0
+INFO  17:06:54,355 - Broj Definicija klasnih polja:0

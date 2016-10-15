@@ -1,0 +1,1268 @@
+package rs.ac.bg.etf.ppProject;
+
+import java_cup.runtime.*;
+import org.apache.log4j.*;
+import rs.etf.pp1.symboltable.Tab;
+import rs.etf.pp1.symboltable.concepts.*;
+import rs.etf.pp1.symboltable.visitors.DumpSymbolTableVisitor;
+import rs.etf.pp1.symboltable.structure.SymbolDataStructure;
+import rs.etf.pp1.symboltable.structure.HashTableDataStructure;
+import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.Reader;
+import rs.etf.pp1.mj.runtime.Code;
+import rs.etf.pp1.symboltable.visitors.SymbolTableVisitor;
+
+// import java.io.*;
+
+/*
+	Parser code je deo gde kazemo kako se oporavljamo od greske ukoliko je to moguce
+*/
+parser code {:
+	
+	boolean foundMainFunction = false;
+	boolean exitedFromMainFunction = false;
+	
+	Logger log = Logger.getLogger(getClass());
+   
+   	int localVCnt = 0;
+   	int globalVCnt = 0;
+   	int globalConst = 0;
+   	int globalArray = 0;
+   	int functionCnt = 0;
+   	int blockCnt = 0;
+   	int formParamCnt = 0;
+   	int functionCallCnt = 0;
+   	int classCnt = 0;
+   	int classMethCnt = 0;
+   	int classFieldCnt;
+   	
+   	int globalVdecl=0;
+    int localVdecl=0;
+    
+    boolean errorFound = false;
+     
+    public void report_fatal_error(String message, Object info) throws java.lang.Exception {
+      done_parsing();
+      report_error(message, info);
+    }
+  
+    public void syntax_error(Symbol cur_token) {
+        report_error("\nSintaksna greska", cur_token);
+        
+    }
+  
+    public void unrecovered_syntax_error(Symbol cur_token) throws java.lang.Exception {
+        report_fatal_error("Fatalna greska, parsiranje se ne moze nastaviti", cur_token);
+        
+    }
+
+    public void report_error(String message, Object info) {
+    	errorFound = true;
+    	StringBuilder msg = new StringBuilder(message); 
+    	if (info instanceof Symbol)
+            msg.append (" na liniji ").append(((Symbol)info).left);
+        System.err.println(msg.toString());
+        //log.error(msg.toString());
+    }
+    
+     public void report_info(String message, Object info) {
+    	StringBuilder msg = new StringBuilder(message); 
+    	if (info instanceof Symbol)
+            msg.append (" na liniji ").append(((Symbol)info).left);
+        System.out.println(msg.toString());
+        //log.info(msg.toString());
+    }
+    
+
+
+    
+   
+	
+    public void dump() {
+    	Tab.dump(new CustomDumpSymbolTableVisitor() );
+    }
+    
+:}
+
+
+scan with {:
+	Symbol s = this.getScanner().next_token();
+	if (s != null && s.value != null) {}
+		//log.info(s.toString() + " " + s.value.toString());
+	return s;
+:}
+
+init with {:
+	Tab.init(); // Universe scope
+:}
+
+action code {:
+
+	Struct currentConstType = null;
+	
+	Obj currentTypeObj = null;
+	
+	Struct currentGlobalType = null;
+
+	Struct currentLocalType = null;
+	
+	boolean returnFound = false;
+
+	Struct currentRetType = null;
+
+	Obj currentMethod = null;
+
+	boolean fieldDeclIA = false;
+	boolean classMethIA = false;
+
+	boolean checkType(Struct src, Struct dst, int line, String name) {
+		if(src == null) return false;
+		if(dst.equals(src)) {
+			return true;
+		}
+		else {
+			parser.report_error("Semanticka greska na liniji: " + line + " neodgovarajuci tip ", null);
+			return false;
+		}
+	
+	}
+	
+	Obj addGlobalVar(int kind, String name, Struct type, int line) {
+		Obj temp = Tab.currentScope().findSymbol(name);
+		if(temp != null) {
+			if(temp.getKind() != kind) {
+				Obj ttemp = Tab.insert(kind, name, type);
+				CustomDumpSymbolTableVisitor visit = new CustomDumpSymbolTableVisitor();
+				visit.visitObjNode(ttemp);
+				String nodeDesc = visit.getOutput();
+				parser.report_info("Semantika: Globalna promenjljiva " + name + " definisana na liniji  " + line + " " + nodeDesc,null);
+				
+				
+				
+			}
+			else {
+				parser.report_error("Semanticka greska na liniji " + line + " Globalna promenjljiva " + name + " vec deklarisana!", null);
+				parser.globalVCnt--;
+			}			
+		}
+		else {
+			temp = Tab.insert(kind, name, type);
+			CustomDumpSymbolTableVisitor visit = new CustomDumpSymbolTableVisitor();
+				visit.visitObjNode(temp);
+				String nodeDesc = visit.getOutput();
+				parser.report_info("Semantika: Globalna promenjljiva " + name + " definisana na liniji  " + line + " " + nodeDesc,null);		
+		}
+		return temp;
+	}
+
+	Obj addLocalVar(int kind, String name, Struct type, int line) {
+		Obj temp = Tab.currentScope().findSymbol(name);
+		if(temp != null) {
+			if(temp.getKind() != kind) {
+				Obj ttemp = Tab.insert(kind, name, type);
+				CustomDumpSymbolTableVisitor visit = new CustomDumpSymbolTableVisitor();
+				visit.visitObjNode(ttemp);
+				String nodeDesc = visit.getOutput();
+				parser.report_info("Semantika: Lokalna promenjljiva " + name + " definisana na liniji  " + line + " " + nodeDesc,null);
+				
+				
+				
+			}
+			else {
+				parser.report_error("Semanticka greska na liniji " + line + " Lokalna promenjljiva " + name + " vec deklarisana!", null);
+				parser.localVCnt--;
+			}			
+		}
+		else {
+			Obj tempt = Tab.insert(kind, name, type);
+			
+			if(type == null){
+				parser.report_info("NULLLL",null);
+			}
+			CustomDumpSymbolTableVisitor visit = new CustomDumpSymbolTableVisitor();
+				visit.visitObjNode(tempt);
+				String nodeDesc = visit.getOutput();
+				parser.report_info("Semantika: Lokalna promenjljiva " + name + " definisana na liniji  " + line + " " + nodeDesc,null);		
+		}
+		return temp;
+	}
+
+:}
+
+/* Terminals */
+terminal LBRACE, RBRACE, LPAREN, RPAREN, LINDEX, RINDEX ;
+terminal PLUS, MINUS, EQUAL, SEMI, COMMA, DOT, MUL, DIV, PERCENTAGE, INCREMENT, DECREMENT ;
+terminal PROG, READ, RETURN, PRINT ;
+terminal IS_LESS, IS_GREATER, IS_LESS_EQUAL, IS_GREATER_EQUAL, IS_DIFFERENT, IS_EQUAL ; 
+terminal CLASS, EXTENDS, VOID, CONST ;
+terminal NEW, IF, ELSE, BREAK, WHILE ;
+terminal LOGICAL_OR, LOGICAL_AND;
+
+terminal Integer NUMBER ;
+terminal String IDENT ; 
+terminal Character CHAR_CONST;
+terminal String STR_CONST;
+terminal Boolean BOOL_CONST;
+
+/* Non-Terminals */
+non terminal Program ;
+non terminal DeclList, Decl, DList ;
+non terminal ConstDecl, ConstDeclList1, ConstDeclAfterComa ;
+non terminal VarDecl ;
+non terminal ClassDecl ;
+non terminal MethodDeclList, MethodDecl ;
+non terminal FormalParamList, FormalParamDecl ;
+non terminal StatementListW, StatementList, Statement ;
+non terminal Unmatched, Matched ;
+non terminal ActParsListW ;
+non terminal Struct Condition, CondTerm, CondFact ;
+
+
+non terminal FunctionDeclListW, FunctionDeclList, FunctionDecl, FormPars ;
+non terminal GlobVarDecl, FieldDecl, FieldDeclList ;
+non terminal GVarDeclList1W, GVarDeclList1, GVarDeclAfterComa ;
+non terminal DeclListErrorLBRACE, VDListLBRACE;
+non terminal VarDeclPart, VarDeclInnerList, VarDeclList, VarDeclListError ;
+non terminal FieldDeclListW;
+non terminal InTheClassError, InTheClassNoError, ITC_withMethod, ITC_withoutMethod, InTheClassRBRACE, MethodDLWrap, ErrorPart;
+non terminal ConditionRPAREN, CondRPARENerror;
+non terminal FormParsError, FormParsRPAREN, VarDeclListError1 ;
+non terminal Struct PNExpr;
+non terminal Obj ProgName;
+non terminal ConstNTerminal;
+non terminal Integer WhileLPAREN;
+non terminal MatchedELSE, ConditionRPAREN1;
+
+non terminal Struct Type, Expr, Term, Factor, ActPars;
+non terminal Obj RValues;
+non terminal String ClassIDENT;
+non terminal Struct ReturnValue;
+non terminal Obj Designator;
+non terminal Struct[] ActParsList;
+non terminal Integer Relop, Addop, Mulop;
+
+
+Program ::=	PROG ProgName:p DList LBRACE FunctionDeclListW RBRACE
+{:
+	
+	if(!parser.foundMainFunction)
+		parser.report_error("Semanticka greska , MAIN funkcija nije pronadjena", null);
+
+	Code.dataSize = Tab.currentScope().getnVars();
+
+	Tab.chainLocalSymbols(p);
+	Tab.closeScope(); 
+:}
+;
+						
+ProgName		::=		IDENT:pName
+{:  
+
+	Tab.insert(Obj.Type, "string", new Struct(Struct.Array, Tab.charType));
+	Tab.insert(Obj.Type, "bool", new Struct(Struct.Bool));
+
+	RESULT = Tab.insert(Obj.Prog, pName, Tab.noType);
+	
+	 Tab.find("ord").setAdr(Code.pc);    
+        					 Code.put(Code.enter);                     
+        					 Code.put(1);                        //  int ord(char c)
+        					 Code.put(1);                        //  {  
+        					 Code.put(Code.load_n);              //      return c;
+        					 Code.put(Code.exit);
+        					 Code.put(Code.return_);
+        					 
+        					 Tab.find("chr").setAdr(Code.pc);
+        					 Code.put(Code.enter);
+        					 Code.put(1);                        //  char chr(int x)
+        					 Code.put(1);                        //  {
+        					 Code.put(Code.load_n);              //      return x % 128;
+        					 Code.loadConst(128);                
+        					 Code.put(Code.rem);
+        					 Code.put(Code.exit);                //  }
+        					 Code.put(Code.return_);
+							
+							Tab.find("len").setAdr(Code.pc);
+       						Code.put(Code.enter);                 
+        					Code.put(1);                        //  int len(array x)
+       						Code.put(1);                        //  {
+        					Code.put(Code.load_n);              //      return x.len;
+        					Code.put(Code.arraylength);         
+        					Code.put(Code.exit);                
+        					Code.put(Code.return_); 
+							
+	
+	Tab.openScope(); 
+:};
+
+
+DList			::=		DeclList 
+						| 
+						/* epsilon */ 
+						;
+
+DeclList		::=		DeclList Decl
+						|
+						Decl
+						;
+						
+Decl			::=		ConstDecl
+						|
+						GlobVarDecl
+						|
+						ClassDecl
+						;
+						
+RValues			::=		NUMBER:num
+						{: RESULT = new Obj(Obj.Con, "irrelevant", Tab.intType, num.intValue(), 0); :}
+						|
+						CHAR_CONST:ch
+						{: RESULT = new Obj(Obj.Con, "irrelevant", Tab.charType, ch.charValue() , 0); :}
+						|
+						BOOL_CONST:bool
+						{: RESULT = new Obj(Obj.Con, "irrelevant", Tab.find("bool").getType(), bool.booleanValue()?1:0, 0); :}
+						|
+						STR_CONST:string
+						{: RESULT = new Obj(Obj.Con, string, Tab.find("string").getType(), 0, 0); :}
+						;
+						
+ConstNTerminal	::=		CONST;
+						
+						
+						
+ConstDecl 		::=		ConstNTerminal Type:cType IDENT:cName EQUAL RValues:cValue SEMI
+						{: parser.globalConst++;
+							if(checkType(cValue.getType(), cType , cNameleft, cName)){
+								Obj temp = Tab.find(cName);
+								if(temp == Tab.noObj) {
+									temp = Tab.insert(Obj.Con, cName, cType);
+									temp.setAdr(cValue.getAdr());
+									
+									CustomDumpSymbolTableVisitor visit = new CustomDumpSymbolTableVisitor();
+									visit.visitObjNode(temp);
+									String nodeDesc = visit.getOutput();
+									parser.report_info("Semantika: Konstanta " + cName + " definisana na: " + cNameleft + " -- " + nodeDesc, null);		
+								}
+								else {
+									parser.report_error("Semanticka greska na linji" + cNameleft + " Konstanta " + cName + " vec definisana!",null);
+									
+								}
+							}
+							currentConstType = null;
+							
+
+						:}
+						|
+						ConstNTerminal error SEMI:l
+						{: this.parser.report_error("Sintaksna greska: Konstanta na linji : " + lleft + "mora biti inicijalizovana", null); :}	
+						|					
+						ConstNTerminal Type:cType IDENT:cName EQUAL RValues:cValue COMMA
+						{: parser.globalConst++;
+							if(checkType(cValue.getType(), cType, cNameleft, cName)){
+								Obj temp = Tab.find(cName);
+								if(temp == Tab.noObj) {
+									temp = Tab.insert(Obj.Con, cName, cType);
+									temp.setAdr(cValue.getAdr());
+									CustomDumpSymbolTableVisitor visit = new CustomDumpSymbolTableVisitor();
+									visit.visitObjNode(temp);
+									String nodeDesc = visit.getOutput();
+									parser.report_info("Semantika: Konstanta " + cName + " definisana na: " + cNameleft + " -- " + nodeDesc, null);		
+								}
+								else {
+									parser.report_error("Semanticka greska na linji" + cNameleft + " Konstanta " + cName + " vec definisana!",null);
+									
+								}
+							}
+							currentConstType = cType;
+							
+						:}
+						ConstDeclList1 SEMI	
+						{:
+							currentConstType = null;
+						:}	
+						;
+						
+
+						
+ConstDeclList1	::=		ConstDeclList1 COMMA ConstDeclAfterComa
+						|
+						ConstDeclAfterComa
+						;
+						
+ConstDeclAfterComa		::=		IDENT:cName EQUAL RValues:cValue
+						{: parser.globalConst++;
+							if(checkType(cValue.getType(), currentConstType, cNameleft, cName)){
+								Obj temp = Tab.find(cName);
+								if(temp == Tab.noObj) {
+									temp = Tab.insert(Obj.Con, cName, currentConstType);
+									temp.setAdr(cValue.getAdr());
+									
+									CustomDumpSymbolTableVisitor visit = new CustomDumpSymbolTableVisitor();
+									visit.visitObjNode(temp);
+									String nodeDesc = visit.getOutput();
+									parser.report_info("Semantika: Konstanta " + cName + " definisana na: " + cNameleft + " -- " + nodeDesc, null);		
+								}
+								else {
+									parser.report_error("Semanticka greska na linji" + cNameleft + " Konstanta " + cName + " vec definisana!",null);
+									
+								}
+							}							
+						:}
+						;
+						
+
+						
+GlobVarDecl		::=		Type:globVarType IDENT:globVarName SEMI
+						{: parser.globalVCnt++;
+							addGlobalVar(Obj.Var, globVarName, globVarType, globVarNameleft);
+						:}
+						|
+						Type error SEMI:l
+						{: parser.report_error("Sintaksna greska Greska pri definiciji globalne promenljive na liniji: " + lleft, null);  :}
+						|
+						Type:globVarType IDENT:globVarName LINDEX RINDEX SEMI
+						{: parser.globalArray++;
+							addGlobalVar(Obj.Var, globVarName, new Struct(Struct.Array, globVarType), globVarNameleft);
+						:}
+						|
+						Type:globVarType IDENT:globVarName COMMA
+						{: parser.globalVCnt++;
+							addGlobalVar(Obj.Var, globVarName, globVarType, globVarNameleft);
+							currentGlobalType = globVarType;
+						:}
+						GVarDeclList1 SEMI
+						{:
+							currentGlobalType = null;
+						:}
+						|
+						Type:globVarType IDENT:i error
+						{: parser.report_error("Sintaksna greska Greska pri definiciji globalne promenljive na liniji: " + ileft, null);  
+							currentGlobalType = globVarType;
+							
+						:}
+						 
+						 COMMA:l GVarDeclList1 SEMI
+						
+						|
+						Type:globVarType IDENT:globVarName LINDEX RINDEX COMMA
+						{: parser.globalArray++;
+							addGlobalVar(Obj.Var, globVarName, new Struct(Struct.Array, globVarType), globVarNameleft);
+							currentGlobalType = globVarType;
+						:}
+						GVarDeclList1W SEMI
+						{:
+							currentGlobalType = null;
+						:}
+						|
+						Type IDENT LINDEX error COMMA GVarDeclList1 SEMI
+						;
+						
+GVarDeclList1W	::=		GVarDeclList1
+						|
+						/* epsilon */
+						;
+						
+GVarDeclList1	::=		GVarDeclList1 COMMA GVarDeclAfterComa
+						|
+						GVarDeclAfterComa
+						;
+						
+GVarDeclAfterComa		::=		IDENT:globVarName
+						{: parser.globalVCnt++;
+							addGlobalVar(Obj.Var, globVarName, currentGlobalType, globVarNameleft);
+						:}
+						|
+						IDENT:globVarName LINDEX RINDEX
+						{: parser.globalArray++;
+							addGlobalVar(Obj.Var, globVarName, new Struct(Struct.Array, currentGlobalType), globVarNameleft);
+						:}
+						;
+						
+FieldDecl		::=		Type VarDeclInnerList SEMI 						
+						|
+						Type VarDeclInnerList error SEMI:l
+						{: parser.report_error("Sintaksna greska Greska pri deklaraciji polja klase na liniji: " + lleft, null);  :}
+						|
+						Type error SEMI:l
+						{: parser.report_error("Sintaksna greska Greska pri deklaraciji polja klase na liniji: " + lleft, null);  :}
+						;
+
+VarDeclPart		::=		IDENT:lVarName
+						{: if(parser.foundMainFunction && !parser.exitedFromMainFunction)
+							parser.localVCnt++;
+							addLocalVar(Obj.Var, lVarName, currentLocalType, lVarNameleft);
+							if(fieldDeclIA == true)
+								parser.classFieldCnt++;
+						
+						:}
+						|
+						IDENT:lVarName LINDEX RINDEX
+						{:
+							if(parser.foundMainFunction && !parser.exitedFromMainFunction)
+							parser.localVCnt++;
+
+							addLocalVar(Obj.Var, lVarName, new Struct(Struct.Array, currentLocalType), lVarNameleft);
+
+							if(fieldDeclIA)
+								parser.classFieldCnt++;
+						:}
+						;
+						
+VarDeclInnerList ::=	VarDeclInnerList COMMA VarDeclPart
+						|
+						VarDeclPart
+						;
+						
+
+						
+VarDecl			::=		Type
+						VarDeclInnerList SEMI						
+						|
+						Type error COMMA VarDeclInnerList SEMI
+						|
+						Type VarDeclInnerList error SEMI:l
+						{: parser.report_error("Sintaksna greska Greska pri definiciji lokalne promenljive na liniji: " + lleft, null);  :}
+						;
+						
+VarDeclList		::=		VarDeclList VarDecl
+						|
+						/* epsilon */
+						;
+						
+						
+FieldDeclList	::=		FieldDeclList FieldDecl
+						|
+						FieldDecl
+						;
+						
+FieldDeclListW	::=		FieldDeclList 
+						|
+						/* epsilon */
+						;
+						
+ClassIDENT		::=		CLASS IDENT
+						{: fieldDeclIA = true; :}
+						;					
+						
+ClassDecl		::=		ClassIDENT LBRACE InTheClassRBRACE
+						{:
+							parser.classCnt++;
+							fieldDeclIA = false;
+						:}
+						|
+						ClassIDENT EXTENDS Type
+						LBRACE InTheClassRBRACE
+						{:
+							parser.classCnt++;
+							fieldDeclIA = false;
+						:}
+						|
+						ClassIDENT EXTENDS error LBRACE:l InTheClassRBRACE
+						{: parser.report_error("Sintaksna greska Greska pri Definisanju prosirenja natklase na liniji: " + lleft, null); :}
+						;
+						
+InTheClassRBRACE ::=	InTheClassError
+						|
+						InTheClassNoError RBRACE
+						;
+						
+												
+InTheClassError	::=		FieldDeclList ErrorPart
+						|
+						ErrorPart
+						;
+						
+ErrorPart		::=		Type error MethodDLWrap:l RBRACE
+						{: parser.report_error("Sintaksna greska Greska pri deklaraciji polja klase na liniji: " + lleft, null);  :}
+						|
+						Type error RBRACE
+						;
+						
+InTheClassNoError	::=	ITC_withMethod
+						|
+						ITC_withoutMethod
+						;
+						
+MethodDLWrap	::=		LBRACE MethodDeclList RBRACE
+						;
+						
+ITC_withMethod	::=		FieldDeclListW MethodDLWrap
+						;
+						
+ITC_withoutMethod ::=	FieldDeclListW
+						;
+						
+
+
+Type 			::= 	IDENT:typeName
+						{:
+							Obj typeNode = Tab.find(typeName);
+							if(typeNode == Tab.noObj) {
+								parser.report_error("Semanticka greska na liniji " + typeNameleft + " Identifikator tipa " + typeName + " nije pronadjen" , null);
+								RESULT = Tab.noType;
+							}
+							else {
+								if(typeNode.getKind() == Obj.Type) {
+									RESULT = typeNode.getType();
+									currentTypeObj = typeNode;
+									currentLocalType = typeNode.getType();
+								}
+								else {
+									parser.report_error("Semanticka greska na liniji: " + typeNameleft + " Identifikator tipa " + typeName + " nije tip!", null);
+									currentTypeObj = null;
+									RESULT = Tab.noType;
+								}
+							}
+						:}
+						;
+
+FunctionDeclListW ::=	FunctionDeclList
+						|
+						/* epsilon */
+						;
+
+MethodDeclList	::=		MethodDeclList MethodDecl
+						|
+						MethodDecl
+						;
+						
+FunctionDeclList ::=	FunctionDeclList FunctionDecl
+						|
+						FunctionDecl
+						;
+						
+ReturnValue		::=		Type:typeVal
+						{:
+							currentRetType = typeVal;
+						:}
+						|
+						VOID
+						{:
+							currentRetType = Tab.noType;
+						:}
+						;
+						
+VDListLBRACE	::= 	VarDeclList LBRACE
+						|
+						DeclListErrorLBRACE
+						;
+						
+						
+DeclListErrorLBRACE	::=	VarDeclList VarDeclListError
+						|
+						VarDeclList VarDeclListError1
+						;
+						
+VarDeclListError1 ::=	Type VarDeclInnerList COMMA error LBRACE:l
+						{: parser.report_error("Sintaksna greska Greska pri definiciji lokalne promenljive na liniji: " + lleft, null);  :}
+						;
+						
+VarDeclListError ::=	Type error LBRACE:l
+						{: parser.report_error("Sintaksna greska Greska pri definiciji lokalne promenljive na liniji: " + lleft, null);  :}
+						;
+						
+FormParsRPAREN	::=		FormPars RPAREN
+						|
+						FormParsError
+						;
+						
+FormParsError	::=		FormalParamList COMMA error RPAREN:l
+						{: parser.report_error("Sintaksna greska Greska pri deklarisanju formalnih parametara na liniji: " + lleft, null);  :}
+						|
+						Type error RPAREN:l	
+						{: parser.report_error("Sintaksna greska Greska pri deklarisanju formalnih parametara na liniji: " + lleft, null);  :}					
+						;
+						
+												
+FunctionDecl	::=		ReturnValue	IDENT:fName
+						{:if(fName.equals("main"))
+							parser.foundMainFunction = true;
+							currentMethod = Tab.insert(Obj.Meth, fName, currentRetType);
+			   				Tab.openScope();
+			   				parser.functionCnt++;
+			   				parser.report_info("Semantika: Obradjuje se funkcija " +fName + " na liniji " + fNameleft, null);
+
+						:} 
+						LPAREN 				
+						FormParsRPAREN VDListLBRACE
+						{:
+							currentMethod.setAdr(Code.pc);
+			   				if("main".equals(fName)) 
+			   					Code.mainPc = currentMethod.getAdr();
+			   		
+			   				Code.put(Code.enter);
+			   				Code.put(currentMethod.getLevel());
+			   				Code.put(Tab.currentScope().getnVars());
+			   			:}						
+						StatementListW RBRACE
+						{:if(fName.equals("main"))
+							parser.exitedFromMainFunction = true;
+							
+						if(!returnFound && currentRetType != Tab.noType)
+			   	 			parser.report_error("Semanticka greska na liniji " + fNameleft + " Funkcija " + fName + " nema return iskaz!", null);
+				 
+				 			
+
+				 		Code.put(Code.exit);
+				 		Code.put(Code.return_);
+
+						Tab.chainLocalSymbols(currentMethod);
+			   	 		Tab.closeScope();
+			   	 		
+			   	 		returnFound = false;
+				 		currentMethod = null;
+							
+						:} 
+						;
+
+MethodDecl 		::= 	ReturnValue	IDENT LPAREN
+						FormParsRPAREN 
+						{: classMethIA = true; :}
+						VDListLBRACE 
+						StatementListW RBRACE
+						{:
+							parser.classMethCnt++;
+							classMethIA = false;
+						:}
+						;	
+					
+FormPars		::=		FormalParamList
+						|
+						/* epsilon */
+						;					
+
+FormalParamList ::= 	FormalParamList COMMA FormalParamDecl
+						|
+						Type error COMMA:l FormalParamDecl
+						{: parser.report_error("Sintaksna greska Greska pri deklarisanju formalnih parametara na liniji: " + lleft, null);  :}	
+						|
+						FormalParamDecl
+						;
+					
+FormalParamDecl ::= 	Type IDENT
+						{:
+							parser.formParamCnt++;
+						:}
+						|
+						Type IDENT LINDEX RINDEX
+						{:
+							parser.formParamCnt++;
+						:}
+						;
+
+StatementListW	::=		StatementList
+						|
+						/* epsilon */
+						;
+					
+StatementList 	::= 	StatementList Statement
+						|
+						Statement
+						;
+						
+Statement		::= 	Matched 
+						|
+						Unmatched ;
+						
+ConditionRPAREN ::=		Condition RPAREN
+						|
+						CondRPARENerror
+						;
+						
+CondRPARENerror ::=		error RPAREN:l
+						{: parser.report_error("Sintaksna greska Greska u IF uslovu na liniji: " + lleft, null);  :}							
+						;
+
+Unmatched		::=		IF LPAREN ConditionRPAREN Statement					
+						|
+						IF LPAREN ConditionRPAREN MatchedELSE Unmatched	
+						;
+						
+MatchedELSE		::=		Matched ELSE						
+						;
+
+					
+Matched			::=		Designator:desi EQUAL Expr:type SEMI
+						{:	
+							if(desi != Tab.noObj && type != Tab.noType) {
+								if(!(desi.getKind() == Obj.Var || desi.getKind() == Obj.Elem || desi.getKind() == Obj.Fld)) {
+									parser.report_error("Semanticka greska na linji: " + desileft + " Identifikator " + desi.getName() + " mora biti promenljiva, element niza ili polje klase!", null);
+								}
+								else {
+									
+									if(!(desi.getType().assignableTo(type) || (type.getKind() == Struct.Bool && desi.getType().getKind() == Struct.Bool)  )) {
+										parser.report_error("Semanticka greska na linji: " + typeleft + " Tip leve strane se ne moze dodeliti desnoj strani " + desi.getName(), null);
+									}
+									else {
+										
+											Code.store(desi);
+																					
+									}																		
+								}
+							}
+							else {
+								if(type == Tab.noType) {
+									parser.report_error("Semanticka greska na linji: " + typeleft + " Tip desne vrednosti ne sme biti void", null);
+								}
+							}	
+							
+											
+						:}					
+						|
+						Designator EQUAL error SEMI:l
+						{: parser.report_error("Sintaksna greska Greska pri dodeli vrednosti na liniji: " + lleft, null);  :}
+						|
+						Designator:desi LPAREN ActParsListW RPAREN SEMI
+						{:
+							if(desi!=Tab.noObj && (desi.getKind() == Obj.Meth)){
+								
+								RESULT = desi.getType();
+								if(currentMethod.getName().equals("main")){
+									parser.functionCallCnt++;
+
+									CustomDumpSymbolTableVisitor visit = new CustomDumpSymbolTableVisitor();
+									visit.visitObjNode(desi);
+									String nodeDesc = visit.getOutput();
+									parser.report_info("Semantika: Upotreba funkcije " + desi.getName() + " unutar main funkcije na liniji " + desileft + " -- " + nodeDesc, null);	
+								}
+
+							}
+							else
+							 parser.report_error("Semanticka greska na linji: " + desileft + " Identifikator " +  desi.getName() + " ne predstavlja funkciju", null);
+							 RESULT = Tab.noType;
+						:}
+						|
+						Designator LPAREN error RPAREN SEMI:l
+						{: parser.report_error("Sintaksna greska Greska pri pozivu metode: " + lleft, null);  :}
+						|
+						Designator:d INCREMENT SEMI
+						{:
+							if(d != Tab.noObj) {
+									if(!d.getType().equals(Tab.intType)) {
+										parser.report_error("Semanticka greska na liniji: " + dleft + " Identifikator " + d.getName() + " mora biti tipa int!", null);
+									}
+									else {
+										if (d.getKind() == Obj.Elem)
+                                         {
+                                             Code.put(Code.dup2);
+                                         }
+									
+										Code.load(d);
+										Code.loadConst(1);
+										Code.put(Code.add);
+										Code.store(d);
+									}
+								
+							}							
+						:}
+						|
+						Designator:d DECREMENT SEMI
+						{:
+							if(d != Tab.noObj) {
+									if(!d.getType().equals(Tab.intType)) {
+										parser.report_error("Semanticka greska na liniji: " + dleft + " Identifikator " + d.getName() + " mora biti tipa int!", null);
+									}
+									else {
+										Code.load(d);
+										Code.loadConst(1);
+										Code.put(Code.sub);
+										Code.store(d);
+									}
+								
+							}							
+						:}
+						|
+			  			IF LPAREN ConditionRPAREN MatchedELSE Matched
+			  			|
+			  			WhileLPAREN ConditionRPAREN1 Matched
+			  			|
+			  			WhileLPAREN error RPAREN:l Matched
+			  			{: parser.report_error("Sintaksna greska Greska u WHILE uslovu na liniji: " + lleft, null); :}
+			  			|
+			  			BREAK SEMI
+			  			|
+			  			RETURN SEMI:l
+			  			{:
+			  			if(currentMethod != null && !Tab.noType.equals(currentMethod.getType())) {
+			  					parser.report_error("Semanticka greska na linji: " + lleft + " Povratni tip funkcije nije void!", null);
+			  				}
+			  				else {
+			  					Code.put(Code.exit);
+			  					Code.put(Code.return_);
+			  				}
+			  			:}
+			  			|
+			  			RETURN Expr:t SEMI
+			  			{:
+						  	 returnFound = true;
+							 Struct currMethType = currentMethod.getType();
+							 if (!currMethType.compatibleWith(t)) {
+							 	parser.report_error("Semanticka greska na liniji " + tleft + " : " + "tip izraza u return naredbi ne slaze se sa tipom povratne vrednosti funkcije " + currentMethod.getName(), null);
+							 }	
+							 else {
+			  					Code.put(Code.exit);
+			  					Code.put(Code.return_);
+			  				}		  	 
+						:}
+			 			|
+			  			READ LPAREN Designator:desi RPAREN SEMI
+			  			{:
+			  			if(desi != Tab.noObj) {
+			  					if(!(desi.getKind() == Obj.Var || desi.getKind() == Obj.Elem || desi.getKind() == Obj.Fld)) {
+			  						parser.report_error("Semanticka greska na liniji: " + desileft + " Identifikator " + desi.getName() + " mora biti promenljiva, element niza ili polje klase!", null);
+			  					}
+			  					else {
+			  						if(!(Tab.intType.equals(desi.getType()) || Tab.charType.equals(desi.getType()) || desi.getType().getKind() == Struct.Bool) ) {
+			  						
+			  							parser.report_error("Semanticka greska na liniji: " + desileft + " Identifikator " + desi.getName() + " mora biti tipa int, char ili  bool!", null);
+			  						}
+			  						else {
+			  							if(desi.getType() == Tab.intType || desi.getType().getKind() == Struct.Bool) {
+			  								Code.put(Code.read);
+			  								Code.store(desi);
+			  							}
+			  							if(desi.getType() == Tab.charType) {
+			  								Code.put(Code.bread);
+			  								Code.store(desi);
+			  							}
+			  						}
+			  					}
+			  				}
+			  			:}
+			  			|
+			 			PRINT LPAREN Expr:type RPAREN SEMI
+			 			{: 
+			 				if(type != Tab.noType) {
+			 					if(!(Tab.intType.equals(type) || Tab.charType.equals(type) || type.getKind() == Struct.Bool
+			 						|| (type.getKind() == Struct.Array && type.getElemType().getKind() == Struct.Char))) {
+			 					
+			 						parser.report_error("Semanticka greska na liniji: " + typeleft + " Tip izraza za PRINT funkciju mora biti int, char, bool ili string!", null);			 					
+			 					}
+			 					else {
+			 						if(type == Tab.intType || type.getKind() == Struct.Bool) {
+			 							Code.loadConst(5);
+			 							Code.put(Code.print);
+			 						}
+			 						if(type == Tab.charType) {
+			 							Code.loadConst(1);
+			 							Code.put(Code.bprint);
+			 						}
+			 					}	
+			 				}			 				
+			 			:}
+			  			|
+			  			PRINT LPAREN Expr:type COMMA NUMBER:num RPAREN SEMI
+			  			{: 
+			 				if(type != Tab.noType) {
+			 					if(!(Tab.intType.equals(type) || Tab.charType.equals(type) || type.getKind() == Struct.Bool
+			 						|| (type.getKind() == Struct.Array && type.getElemType().getKind() == Struct.Char))) {
+			 					
+			 						parser.report_error("Semanticka greska na liniji: " + typeleft + " Tip izraza za PRINT funkciju mora biti int, char, bool ili string!", null);			 					
+			 					}
+			 					else {
+			 						if(type == Tab.intType || type.getKind() == Struct.Bool) {
+			 							Code.loadConst(num.intValue());
+			 							Code.put(Code.print);
+			 						}
+			 						if(type == Tab.charType) {
+			 							Code.loadConst(num.intValue());
+			 							Code.put(Code.bprint);
+			 						}
+			 					}	
+			 				}			 				
+			 			:}
+			  			|
+			  			LBRACE StatementListW RBRACE
+			  			{:
+			  				parser.blockCnt++;
+			  			:}
+			  			; 
+			  			
+WhileLPAREN		::=		WHILE LPAREN
+						;
+						
+ConditionRPAREN1 ::=	Condition RPAREN						
+						;
+		  			
+ActParsListW	::=		ActParsList
+						|
+						/* epsilon */
+						;
+						
+ActParsList		::=		ActParsList COMMA ActPars
+						|
+						ActPars
+						;
+						
+ActPars			::=		Expr;
+
+Condition		::=		Condition LOGICAL_OR CondTerm
+						|
+						CondTerm
+						;
+						
+CondTerm		::=		CondTerm LOGICAL_AND CondFact
+						|
+						CondFact
+						;
+						
+CondFact		::=		Expr
+						|
+						Expr Relop Expr
+						;
+						
+PNExpr	::=		MINUS Term:type
+						{:
+							
+							if(type.getKind() != Struct.Int) {
+								RESULT = Tab.noType;
+								parser.report_error("Semanticka greska na liniji: " + typeleft + " Minus se moze koristiti uz podatak tipa int!", null);
+							}
+							else {
+								RESULT = type;
+								Code.put(Code.neg);
+							}
+						:}
+						|
+						Term:type
+						{:
+							RESULT = type;
+						:}
+						;
+						
+
+Expr 			::= 	Expr:type1 Addop:oper Term:type2
+						{:
+						if(type1 != Tab.noType && type2 != Tab.noType) {
+								if(type1.getKind() == Struct.Int && type2.getKind() ==Struct.Int) {
+									RESULT = Tab.intType;
+									Code.put(oper.intValue());
+								}
+								else {
+									parser.report_error("Semanticka greska na liniji: " + type1left + " Oba operanda moraju biti tipa int pri operaciji sabiranja", null);
+									RESULT = Tab.noType;
+								}
+						}
+						:}
+		 				|
+		 				PNExpr:type
+		 				{:
+		 					RESULT = type;
+		 				:}
+		 				;
+		 
+Term 			::= 	Term:firstE Mulop:op Factor:secondE
+						{:
+							
+							if(firstE != Tab.noType && secondE != Tab.noType) {
+								if(firstE.getKind() == Struct.Int && secondE.getKind() == Struct.Int) {
+									RESULT = firstE;
+									Code.put(op.intValue());
+								}
+								else {
+									parser.report_error("Semanticka greska na liniji: " + firstEleft + " Oba operanda moraju biti tipa int pri operacijama mnozenja i deljenja", null);
+									RESULT = Tab.noType;
+								}
+							}							
+						:}
+						|
+						Factor:t
+						{:
+							RESULT = t;
+						:}
+						;
+						
+
+Factor			::=		Designator:d
+						{:
+							if(d != Tab.noObj) {
+								RESULT = d.getType();
+							}
+							else RESULT = Tab.noType;
+
+							Code.load(d);
+
+						:}
+						|
+						Designator:desi LPAREN ActParsListW RPAREN
+						{:
+							if(desi!=Tab.noObj && (desi.getKind() == Obj.Meth)){
+								
+								RESULT = desi.getType();
+								if(currentMethod.getName().equals("main")){
+									parser.functionCallCnt++;
+
+									DumpSymbolTableVisitor visit = new DumpSymbolTableVisitor();
+									visit.visitObjNode(desi);
+									String nodeDesc = visit.getOutput();
+									parser.report_info("Semantika: Upotreba funkcije " + desi.getName() + " unutar main funkcije na liniji " + desileft + " -- " + nodeDesc, null);	
+								}
+
+							}
+							else{
+							 parser.report_error("Semanticka greska na linji: " + desileft + " Identifikator " +  desi.getName() + " ne predstavlja funkciju", null);
+							 RESULT = Tab.noType;
+							 }
+						:}
+						|
+						NUMBER:n
+						{:
+							Obj c = Tab.insert(Obj.Con, "", Tab.intType);
+							c.setAdr(n.intValue());
+							Code.load(c);
+							RESULT = Tab.intType; 
+						:}
+						|
+						CHAR_CONST:c_const
+						{:
+							Obj c = Tab.insert(Obj.Con, "", Tab.charType);
+							c.setAdr(c_const.charValue());
+							Code.load(c);
+							RESULT = Tab.charType;
+						:}
+						|
+						STR_CONST
+						|
+						BOOL_CONST:b
+						{:
+							Obj o = Tab.insert(Obj.Con, "", new Struct(Struct.Bool));
+							o.setAdr(b.booleanValue() ? 1: 0);
+							Code.load(o);
+							RESULT = new Struct(Struct.Bool);
+						:}
+						|
+						NEW Type
+						|
+						NEW Type:type1 LINDEX Expr:type2 RINDEX
+						{: 
+							RESULT = Tab.noType;
+							if(type1 != Tab.noType && type2 != Tab.noType) {
+								if(Tab.intType.equals(type2)) {
+									RESULT = new Struct(Struct.Array, type1);
+									Code.put(Code.newarray);
+									if(type1 == Tab.charType) {
+										Code.put(0);
+									}
+									else {
+										Code.put(1);
+									}
+								}
+								else {
+									parser.report_error("Semanticka greska na liniji: " + type2left + " Izraz u [] mora biti tipa int!", null);
+								}	
+							}													
+						:}
+						|
+						LPAREN Expr:type RPAREN
+						{:
+							if(type != Tab.noType) {
+								RESULT = type;
+							}
+							else RESULT = Tab.noType;
+						:}
+						;
+						
+Designator		::=		Designator DOT IDENT
+						|
+						Designator:type1 LINDEX 
+						{:
+							RESULT = Tab.noObj;
+							if(type1 != Tab.noObj) {
+								if(type1.getType().getKind() != Struct.Array) {
+									parser.report_error("Semanticka greska na liniji: " + type1left + " Identifikator " + type1.getName() + " mora biti niz!", null);
+								}
+								else {
+									RESULT = new Obj(Obj.Elem, "irrelevant", type1.getType().getElemType());
+									Code.load(type1);
+								}
+							}	
+						:}
+						Expr:type2 RINDEX
+						{:
+							if(!Tab.intType.equals(type2)) {
+								parser.report_error("Semanticka greska na liniji: " + type2left + " izraz u [] mora biti tipa int!", null);
+							}																				
+						:}
+						|
+						Designator LINDEX error RINDEX:l
+						{:
+							parser.report_error("Sintaksna greska Greska pri indeksiranju niza na liniji: " + lleft, null); 
+							RESULT = Tab.noObj;
+						:}
+						|
+						IDENT:desiName
+						{:
+							boolean found = false;
+							RESULT = Tab.noObj;
+							Obj temp = Tab.currentScope().findSymbol(desiName);
+							if(temp != null) {								
+								RESULT = temp;
+								
+							}	
+							else{
+								if(currentMethod == null){
+									parser.report_error("Semanticka greska na liniji: " + desiNameleft + " Identifikator " + desiName + " se koristi a nije deklarisan", null);
+								}
+								else{
+									Scope outer = Tab.currentScope().getOuter();
+									temp = outer.findSymbol(desiName);
+
+									if(temp!= null){
+										RESULT = temp;
+									}
+									else
+										parser.report_error("Semanticka greska na liniji: " + desiNameleft + " Identifikator " + desiName + " se koristi a nije deklarisan", null);
+								}
+							}
+						:}
+						;
+						
+Relop			::=		IS_EQUAL
+						{: RESULT = new Integer(Code.eq); :}
+						|
+						IS_DIFFERENT
+						{: RESULT = new Integer(Code.ne); :}
+						|
+						IS_GREATER
+						{: RESULT = new Integer(Code.gt); :}
+						|
+						IS_GREATER_EQUAL
+						{: RESULT = new Integer(Code.ge); :}
+						|
+						IS_LESS
+						{: RESULT = new Integer(Code.lt); :}
+						|
+						IS_LESS_EQUAL
+						{: RESULT = new Integer(Code.le); :}
+						;
+						
+Addop			::=		PLUS
+						{: RESULT = new Integer(Code.add); :}
+						|
+						MINUS
+						{: RESULT = new Integer(Code.sub); :}
+						;
+						
+Mulop			::=		MUL
+						{: RESULT = new Integer(Code.mul); :}
+						|
+						DIV
+						{: RESULT = new Integer(Code.div); :}
+						|
+						PERCENTAGE
+						{: RESULT = new Integer(Code.rem); :}
+						;
+						
+
+
+					
+					
+					

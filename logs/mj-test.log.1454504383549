@@ -1,0 +1,50 @@
+INFO  13:57:33,858 - Compiling source file: C:\pp1projekat\MJ Compiler\test\program.mj
+INFO  13:57:33,868 - #19 program
+INFO  13:57:33,868 - #41 MaxCifra
+INFO  13:57:33,868 - #32 const
+INFO  13:57:33,868 - #41 int
+INFO  13:57:33,868 - #41 x
+INFO  13:57:33,868 - #11 ;
+INFO  13:57:33,869 - #41 int
+INFO  13:57:33,869 - #41 a
+INFO  13:57:33,869 - #12 ,
+INFO  13:57:33,869 - #41 c
+INFO  13:57:33,869 - #12 ,
+INFO  13:57:33,869 - #41 maxcif
+INFO  13:57:33,869 - #11 ;
+INFO  13:57:33,869 - #41 char
+INFO  13:57:33,869 - #41 e
+INFO  13:57:33,869 - #10 =
+INFO  13:57:33,869 - #42 2
+INFO  13:57:33,869 - #11 ;
+INFO  13:57:33,869 - #41 int
+INFO  13:57:33,869 - #41 cE
+INFO  13:57:33,869 - #11 ;
+INFO  13:57:33,869 - #2 {
+INFO  13:57:33,869 - #31 void
+INFO  13:57:33,869 - #41 main
+INFO  13:57:33,869 - #4 (
+INFO  13:57:33,869 - #5 )
+INFO  13:57:33,869 - #41 char
+INFO  13:57:33,869 - #41 a
+INFO  13:57:33,869 - #11 ;
+INFO  13:57:33,869 - #41 int
+INFO  13:57:33,869 - #41 z
+INFO  13:57:33,869 - #10 =
+INFO  13:57:33,869 - #40 0
+INFO  13:57:33,869 - #2 {
+INFO  13:57:33,869 - #20 read
+INFO  13:57:33,869 - #4 (
+INFO  13:57:33,869 - #41 a
+INFO  13:57:33,869 - #5 )
+INFO  13:57:33,869 - #11 ;
+INFO  13:57:33,869 - #41 maxcif
+INFO  13:57:33,869 - #10 =
+INFO  13:57:33,869 - #40 0
+INFO  13:57:33,869 - #11 ;
+INFO  13:57:33,869 - #3 }
+INFO  13:57:33,869 - #3 }
+INFO  13:57:33,869 - Broj Globalnih promenjljivi:4
+INFO  13:57:33,869 - Broj Lokalnih promenjljivi:1
+INFO  13:57:33,869 - Broj Globalnih konstanti:0
+INFO  13:57:33,869 - Broj Globalnih nizova:0

@@ -1,0 +1,31 @@
+INFO  00:25:13,145 - Compiling source file: C:\pp1projekat\MJ Compiler\test\program.mj
+INFO  00:25:13,161 - #19 program
+INFO  00:25:13,162 - #41 Geometrija
+INFO  00:25:13,162 - #32 const
+INFO  00:25:13,162 - #41 int
+INFO  00:25:13,162 - #41 PI
+INFO  00:25:13,162 - #10 =
+INFO  00:25:13,162 - #40 3
+INFO  00:25:13,162 - #11 ;
+INFO  00:25:13,162 - #41 int
+INFO  00:25:13,163 - #41 rezultati
+INFO  00:25:13,163 - #6 [
+INFO  00:25:13,163 - #7 ]
+INFO  00:25:13,163 - #11 ;
+INFO  00:25:13,163 - #41 int
+INFO  00:25:13,163 - #41 c
+INFO  00:25:13,164 - #11 ;
+INFO  00:25:13,164 - #41 int
+INFO  00:25:13,164 - #40 3
+INFO  00:25:13,164 - =====================BROJACI=========================
+INFO  00:25:13,164 - Broj Globalnih promenjljivi:1
+INFO  00:25:13,164 - Broj Lokalnih promenjljivi:0
+INFO  00:25:13,165 - Broj Globalnih konstanti:1
+INFO  00:25:13,165 - Broj Globalnih nizova:1
+INFO  00:25:13,165 - Broj Deklaracija funkcija:0
+INFO  00:25:13,165 - Broj Blokova naredbi:0
+INFO  00:25:13,165 - Broj Poziva funkcija u main metodi:0
+INFO  00:25:13,165 - Broj Deklaracija formalnih argumenata:0
+INFO  00:25:13,165 - Broj Definicija unutrasnjih klasa:0
+INFO  00:25:13,165 - Broj Definicija klasnih metoda:0
+INFO  00:25:13,165 - Broj Definicija klasnih polja:0

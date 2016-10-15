@@ -1,0 +1,46 @@
+Semantika: Konstanta jedan definisana na: 2 -- Con jedan: int, 1, 0 
+Semantika: Konstanta pet definisana na: 3 -- Con pet: int, 5, 0 
+Semantika: Globalna promenjljiva bodovi definisana na liniji  4 Var bodovi: int, 0, 0 
+Semantika: Globalna promenjljiva niz definisana na liniji  5 Var niz: Arr of int, 1, 0 
+Semantika: Globalna promenjljiva nizch definisana na liniji  7 Var nizch: Arr of char, 2, 0 
+Semantika: Obradjuje se funkcija main na liniji 10
+
+=====================BROJACI=========================
+Broj Globalnih promenjljivi:1
+Broj Lokalnih promenjljivi:0
+Broj Globalnih konstanti:2
+Broj Globalnih nizova:2
+Broj Deklaracija funkcija:1
+Broj Blokova naredbi:0
+Broj Poziva funkcija u main metodi:0
+Broj Deklaracija formalnih argumenata:0
+Broj Definicija unutrasnjih klasa:0
+Broj Definicija klasnih metoda:0
+Broj Definicija klasnih polja:0
+=====================SYMBOL TABLE DUMP=========================
+Type int: int, -1, -1 
+Type char: char, -1, -1 
+Con eol: char, 10, 0 
+Con null: Class [], 0, 0 
+Meth chr: char, 6, 1 
+   Var i: int, 0, 1 
+
+Meth ord: int, 0, 1 
+   Var ch: char, 0, 1 
+
+Meth len: int, 18, 1 
+   Var arr: Arr of notype, 0, 1 
+
+Type string: Arr of char, 0, 1 
+Type bool: bool, 0, 1 
+Prog test: notype, 0, 1 
+   Con jedan: int, 1, 0 
+   Con pet: int, 5, 0 
+   Var bodovi: int, 0, 0 
+   Var niz: Arr of int, 1, 0 
+   Var nizch: Arr of char, 2, 0 
+   Meth main: notype, 25, 0 
+      Con : int, 1, 1 
+
+
+

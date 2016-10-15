@@ -1,0 +1,118 @@
+INFO  17:03:13,334 - Compiling source file: C:\pp1projekat\MJ Compiler\test\program.mj
+INFO  17:03:13,364 - #19 program
+INFO  17:03:13,364 - #41 Prilepi
+INFO  17:03:13,364 - #41 int
+INFO  17:03:13,364 - #41 a
+INFO  17:03:13,364 - #12 ,
+INFO  17:03:13,364 - #41 b
+INFO  17:03:13,365 - #11 ;
+INFO  17:03:13,365 - #41 int
+INFO  17:03:13,365 - #41 manji
+INFO  17:03:13,365 - #12 ,
+INFO  17:03:13,365 - #41 veci
+INFO  17:03:13,366 - #12 ,
+INFO  17:03:13,366 - #41 step
+INFO  17:03:13,366 - #12 ,
+INFO  17:03:13,366 - #41 pom
+INFO  17:03:13,366 - #12 ,
+INFO  17:03:13,366 - #41 novi
+INFO  17:03:13,366 - #11 ;
+INFO  17:03:13,367 - #32 const
+INFO  17:03:13,367 - #41 int
+INFO  17:03:13,367 - #41 x
+INFO  17:03:13,367 - #10 =
+INFO  17:03:13,367 - #40 10
+INFO  17:03:13,368 - #11 ;
+INFO  17:03:13,368 - #2 {
+INFO  17:03:13,368 - #31 void
+INFO  17:03:13,368 - #41 main
+INFO  17:03:13,368 - #4 (
+INFO  17:03:13,368 - #5 )
+INFO  17:03:13,368 - #2 {
+INFO  17:03:13,368 - #20 read
+INFO  17:03:13,369 - #4 (
+INFO  17:03:13,369 - #41 a
+INFO  17:03:13,369 - #5 )
+INFO  17:03:13,369 - #11 ;
+INFO  17:03:13,369 - #20 read
+INFO  17:03:13,370 - #4 (
+INFO  17:03:13,370 - #41 b
+INFO  17:03:13,370 - #5 )
+INFO  17:03:13,370 - #11 ;
+INFO  17:03:13,370 - #41 novi
+INFO  17:03:13,370 - #10 =
+INFO  17:03:13,370 - #40 0
+INFO  17:03:13,370 - #11 ;
+INFO  17:03:13,370 - #34 if
+INFO  17:03:13,370 - #4 (
+INFO  17:03:13,370 - #41 a
+INFO  17:03:13,370 - #23 <
+INFO  17:03:13,371 - #41 b
+INFO  17:03:13,371 - #5 )
+INFO  17:03:13,371 - #2 {
+INFO  17:03:13,371 - #41 manji
+INFO  17:03:13,371 - #10 =
+INFO  17:03:13,371 - #41 a
+INFO  17:03:13,371 - #11 ;
+INFO  17:03:13,371 - #41 veci
+INFO  17:03:13,371 - #10 =
+INFO  17:03:13,371 - #41 b
+INFO  17:03:13,371 - #11 ;
+INFO  17:03:13,371 - #3 }
+INFO  17:03:13,372 - #35 else
+INFO  17:03:13,372 - #2 {
+INFO  17:03:13,372 - #41 manji
+INFO  17:03:13,372 - #10 =
+INFO  17:03:13,372 - #41 b
+INFO  17:03:13,372 - #11 ;
+INFO  17:03:13,373 - #41 veci
+INFO  17:03:13,373 - #10 =
+INFO  17:03:13,373 - #41 a
+INFO  17:03:13,373 - #11 ;
+INFO  17:03:13,373 - #3 }
+INFO  17:03:13,373 - #41 pom
+INFO  17:03:13,373 - #10 =
+INFO  17:03:13,373 - #41 manji
+INFO  17:03:13,373 - #11 ;
+INFO  17:03:13,373 - #37 while
+INFO  17:03:13,374 - #4 (
+INFO  17:03:13,374 - #41 pom
+INFO  17:03:13,374 - #24 >
+INFO  17:03:13,374 - #40 0
+INFO  17:03:13,374 - #5 )
+INFO  17:03:13,374 - #2 {
+INFO  17:03:13,374 - #41 pom
+INFO  17:03:13,374 - #10 =
+INFO  17:03:13,374 - #41 pom
+INFO  17:03:13,374 - #15 /
+INFO  17:03:13,374 - #41 x
+INFO  17:03:13,375 - #11 ;
+INFO  17:03:13,375 - #41 step
+INFO  17:03:13,375 - #10 =
+INFO  17:03:13,375 - #41 step
+INFO  17:03:13,375 - #14 *
+INFO  17:03:13,375 - #41 x
+INFO  17:03:13,375 - #11 ;
+INFO  17:03:13,375 - #3 }
+INFO  17:03:13,375 - #41 novi
+INFO  17:03:13,375 - #10 =
+INFO  17:03:13,375 - #41 veci
+INFO  17:03:13,376 - #14 *
+INFO  17:03:13,376 - #41 step
+INFO  17:03:13,376 - #8 +
+INFO  17:03:13,376 - #41 manji
+INFO  17:03:13,376 - #11 ;
+INFO  17:03:13,376 - #3 }
+INFO  17:03:13,376 - #3 }
+INFO  17:03:13,376 - =====================BROJACI=========================
+INFO  17:03:13,376 - Broj Globalnih promenjljivi:7
+INFO  17:03:13,376 - Broj Lokalnih promenjljivi:0
+INFO  17:03:13,377 - Broj Globalnih konstanti:1
+INFO  17:03:13,377 - Broj Globalnih nizova:0
+INFO  17:03:13,377 - Broj Deklaracija funkcija:1
+INFO  17:03:13,377 - Broj Blokova naredbi:3
+INFO  17:03:13,377 - Broj Poziva funkcija u main metodi:0
+INFO  17:03:13,377 - Broj Deklaracija formalnih argumenata:0
+INFO  17:03:13,377 - Broj Definicija unutrasnjih klasa:0
+INFO  17:03:13,377 - Broj Definicija klasnih metoda:0
+INFO  17:03:13,377 - Broj Definicija klasnih polja:0

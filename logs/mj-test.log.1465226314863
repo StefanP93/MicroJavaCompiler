@@ -1,0 +1,13 @@
+INFO  17:18:22,108 - Compiling source file: C:\pp1projekat\MJ Compiler\test\program.mj
+INFO  17:18:22,127 - =====================BROJACI=========================
+INFO  17:18:22,127 - Broj Globalnih promenjljivi:3
+INFO  17:18:22,127 - Broj Lokalnih promenjljivi:0
+INFO  17:18:22,127 - Broj Globalnih konstanti:0
+INFO  17:18:22,128 - Broj Globalnih nizova:1
+INFO  17:18:22,128 - Broj Deklaracija funkcija:1
+INFO  17:18:22,128 - Broj Blokova naredbi:0
+INFO  17:18:22,128 - Broj Poziva funkcija u main metodi:0
+INFO  17:18:22,128 - Broj Deklaracija formalnih argumenata:0
+INFO  17:18:22,128 - Broj Definicija unutrasnjih klasa:0
+INFO  17:18:22,128 - Broj Definicija klasnih metoda:0
+INFO  17:18:22,128 - Broj Definicija klasnih polja:0
